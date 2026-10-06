@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import { handleServiceError } from '../utils/errorHandler.js'
 
 dotenv.config()
 
@@ -8,14 +9,14 @@ export default async function menuRoutes(fastify) {
             const response = await fetch(process.env.URL_MENU)
             if (!response.ok) {
                 return reply.status(response.status).send({
-                    message: 'Menu Service returned an error'
+                    message: handleServiceError(response.status)
                 })
             }
             const data = await response.json()
             return reply.send(data)
         } catch (error) {
-            return reply.status(500).send({
-                message: 'Error accessing service'
+            return reply.status(502).send({
+                message: 'Unable to access Menu Service'
             })
         }
     })
