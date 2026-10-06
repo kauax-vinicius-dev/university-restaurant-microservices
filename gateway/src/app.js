@@ -1,12 +1,16 @@
 import Fastify from 'fastify'
+import menuRoutes from './routes/menuRoutes.js'
+import cors from '@fastify/cors'
 
 const fastify = Fastify({
     logger: true
 })
 
-fastify.register(require('@fastify/cors'), {
+fastify.register(menuRoutes)
+
+fastify.register(cors, {
     origin: '*',
-    methods: [['GET', 'POST', 'PUT', 'DELETE']],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 })
 
