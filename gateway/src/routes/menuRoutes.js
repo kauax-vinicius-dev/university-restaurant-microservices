@@ -1,10 +1,22 @@
 import dotenv from 'dotenv'
-import proxy from '@fastify/http-proxy'
 
 dotenv.config()
 
 export default async function menuRoutes(fastify) {
-    fastify.register(proxy, {
-        upstream: process.env.URL_MENU
+    fastify.get('/menu', async (request, reply) => {
+        try {
+            const response = await fetch(process.env.URL_MENU)
+            if (!response.ok) {
+                return reply.status(response.status).send({
+                    message: 'Menu Service returned an error'
+                })
+            }
+            const data = await response.json()
+            return reply.send(data)
+        } catch (error) {
+            return reply.status(500).send({
+                message: 'Error accessing service'
+            })
+        }
     })
 }
