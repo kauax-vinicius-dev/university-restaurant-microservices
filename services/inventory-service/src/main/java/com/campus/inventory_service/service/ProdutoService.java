@@ -34,6 +34,7 @@ public class ProdutoService {
         }else{
             ativo = "Indisponível";
         }
+
         ProdutoResponseDto responseDto = ProdutoResponseDto.builder()
                 .nome(produto.getNome())
                 .descricao(produto.getDescricao())

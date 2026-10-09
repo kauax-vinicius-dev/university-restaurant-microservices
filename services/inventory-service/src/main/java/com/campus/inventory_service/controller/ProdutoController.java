@@ -2,6 +2,7 @@ package com.campus.inventory_service.controller;
 
 
 import com.campus.inventory_service.dto.ProdutoRequestDto;
+import com.campus.inventory_service.dto.ProdutoResponseDto;
 import com.campus.inventory_service.service.ProdutoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class ProdutoController {
 
     private final ProdutoService produtoService;
+
+    @GetMapping("{idProduto}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProdutoResponseDto getProduto(@PathVariable Long idProduto){
+        return produtoService.getProduto(idProduto);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

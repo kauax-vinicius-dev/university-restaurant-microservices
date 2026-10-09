@@ -11,8 +11,6 @@ import lombok.*;
 @Builder
 public class ProdutoResponseDto {
 
-    private Long id;
-
     private String nome;
 
     private String descricao;
