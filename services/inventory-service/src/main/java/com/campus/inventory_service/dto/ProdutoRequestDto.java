@@ -28,6 +28,9 @@ public class ProdutoRequestDto {
     private BigDecimal preco;
 
     @NotNull
+    private Integer quantidade;
+
+    @NotNull
     private Boolean ativo;
 
     @NotNull
