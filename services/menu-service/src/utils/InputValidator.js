@@ -18,4 +18,8 @@ export class InputValidator {
     static isPositiveNumber(value) {
         return typeof value === "number" && Number.isFinite(value) && value > 0;
     }
+
+    static isString(value) {
+        return typeof value === "string";
+    }
 }
