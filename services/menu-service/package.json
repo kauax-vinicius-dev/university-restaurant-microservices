@@ -4,9 +4,10 @@
   "description": "",
   "license": "ISC",
   "author": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "menuApp.js",
   "scripts": {
+    "dev": "nodemon src/menuApp.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
