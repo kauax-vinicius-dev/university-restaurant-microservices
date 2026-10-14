@@ -39,6 +39,7 @@ public class ProdutoService {
         ProdutoResponseDto responseDto = ProdutoResponseDto.builder()
                 .nome(produto.getNome())
                 .descricao(produto.getDescricao())
+                .preco(produto.getPreco())
                 .quantidade(estoque.getQuantidade())
                 .ativo(ativo)
                 .categoria(produto.getCategoria())
