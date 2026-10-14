@@ -14,4 +14,8 @@ export class InputValidator {
     static isEmpty(value) {
         return value === "" || value === null || value === undefined || value.trim?.() === ""
     }
+
+    static isPositiveNumber(value) {
+        return typeof value === "number" && Number.isFinite(value) && value > 0;
+    }
 }
