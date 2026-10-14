@@ -26,7 +26,7 @@ public class ProdutoService {
         ProdutoEntity produto = produtoRepository.findById(idProduto)
                 .orElseThrow(()-> new RuntimeException("Produto não encontrado!"));
 
-        EstoqueEntity estoque = estoqueRepository.findById(idProduto)
+        EstoqueEntity estoque = estoqueRepository.findByProdutoId(idProduto)
                 .orElseThrow(()-> new RuntimeException("Produto não encontrado!"));
 
         String ativo = "";
@@ -79,6 +79,42 @@ public class ProdutoService {
                 .build();
 
         movimentacaoRepository.save(movimentacao);
+    }
+
+    //atualiza registros do produto
+    @Transactional
+    public void updateProduto(Long idProduto, ProdutoRequestDto requestDto){
+
+        ProdutoEntity produto = produtoRepository.findById(idProduto)
+                .orElseThrow(()-> new RuntimeException("Produto não encontrado!"));
+
+        EstoqueEntity estoque = estoqueRepository.findByProdutoId(idProduto)
+                .orElseThrow(()-> new RuntimeException("Produto não encontrado!"));
+
+        produto.setNome(requestDto.getNome());
+        produto.setDescricao(requestDto.getDescricao());
+        produto.setPreco(requestDto.getPreco());
+        produto.setAtivo(requestDto.getAtivo());
+        produto.setCategoria(requestDto.getCategoria());
+
+        if(estoque.getQuantidade() < requestDto.getQuantidade()){
+            estoque.setQuantidade(requestDto.getQuantidade());
+
+            MovimentacaoEntity movimentacao = MovimentacaoEntity.builder()
+                    .produto(produto)
+                    .quantidade(requestDto.getQuantidade() - estoque.getQuantidade())
+                    .tipoMovimentacao(TipoMovimentacao.ENTRADA)
+                    .build();
+
+        } else if(estoque.getQuantidade() > requestDto.getQuantidade()){
+            estoque.setQuantidade(requestDto.getQuantidade());
+
+            MovimentacaoEntity movimentacao = MovimentacaoEntity.builder()
+                    .produto(produto)
+                    .quantidade(estoque.getQuantidade() - requestDto.getQuantidade())
+                    .tipoMovimentacao(TipoMovimentacao.SAIDA)
+                    .build();
+        }
     }
 
     //deleta permanentemente um produto
