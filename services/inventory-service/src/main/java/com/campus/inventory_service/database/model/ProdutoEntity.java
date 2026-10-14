@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.List;
 
 @Table(name = "produto")
 @Entity
@@ -36,6 +38,12 @@ public class ProdutoEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     private CategoriaEnum categoria;
+
+    @OneToOne(mappedBy = "produto", cascade = CascadeType.REMOVE)
+    private EstoqueEntity estoque;
+
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<MovimentacaoEntity> movimentacao = new LinkedList<>();
 
 }
 

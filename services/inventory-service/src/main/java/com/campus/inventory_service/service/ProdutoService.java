@@ -21,6 +21,7 @@ public class ProdutoService {
     private final IEstoqueRepository estoqueRepository;
     private final IMovimentacaoRepository movimentacaoRepository;
 
+    //visualizar produto
     public ProdutoResponseDto getProduto(Long idProduto){
         ProdutoEntity produto = produtoRepository.findById(idProduto)
                 .orElseThrow(()-> new RuntimeException("Produto não encontrado!"));
@@ -46,6 +47,7 @@ public class ProdutoService {
         return responseDto;
     }
 
+    //adicionar produto
     @Transactional
     public void addProduto(ProdutoRequestDto requestDto) {
 
@@ -76,6 +78,14 @@ public class ProdutoService {
                 .build();
 
         movimentacaoRepository.save(movimentacao);
+    }
+
+    //deleta permanentemente um produto
+    public void permanentDeleteProduto(Long idProduto){
+        ProdutoEntity produto = produtoRepository.findById(idProduto)
+                .orElseThrow(()-> new RuntimeException("Produto não encontrado!"));
+
+        produtoRepository.delete(produto);
     }
 
 

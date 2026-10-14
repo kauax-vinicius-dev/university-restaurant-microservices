@@ -29,4 +29,10 @@ public class ProdutoController {
     public void addProduto(@Valid @RequestBody ProdutoRequestDto requestDto){
         produtoService.addProduto(requestDto);
     }
+
+    @DeleteMapping("{idProduto}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProduto(@PathVariable Long idProduto){
+        produtoService.permanentDeleteProduto(idProduto);
+    }
 }
