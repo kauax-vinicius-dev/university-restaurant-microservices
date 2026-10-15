@@ -26,7 +26,7 @@ public class ProdutoService {
         ProdutoEntity produto = produtoRepository.findById(idProduto)
                 .orElseThrow(()-> new RuntimeException("Produto não encontrado!"));
 
-        EstoqueEntity estoque = estoqueRepository.findByProdutoId(idProduto)
+        EstoqueEntity estoque = estoqueRepository.findByProdutoIdProduto(idProduto)
                 .orElseThrow(()-> new RuntimeException("Produto não encontrado!"));
 
 
@@ -82,7 +82,7 @@ public class ProdutoService {
         ProdutoEntity produto = produtoRepository.findById(idProduto)
                 .orElseThrow(()-> new RuntimeException("Produto não encontrado!"));
 
-        EstoqueEntity estoque = estoqueRepository.findByProdutoId(idProduto)
+        EstoqueEntity estoque = estoqueRepository.findByProdutoIdProduto(idProduto)
                 .orElseThrow(()-> new RuntimeException("Produto não encontrado!"));
 
         produto.setNome(requestDto.getNome());

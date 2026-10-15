@@ -33,8 +33,7 @@ public class ProdutoController {
     @PutMapping("{idProduto}")
     @ResponseStatus(HttpStatus.OK)
     public ProdutoResponseDto updateProduto(@PathVariable Long idProduto, @Valid @RequestBody ProdutoRequestDto requestDto){
-        produtoService.updateProduto(idProduto, requestDto);
-
+        return produtoService.updateProduto(idProduto, requestDto);
     }
 
     @DeleteMapping("{idProduto}")
