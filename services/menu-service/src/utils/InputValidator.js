@@ -22,4 +22,8 @@ export class InputValidator {
     static isString(value) {
         return typeof value === "string";
     }
+
+    static isBoolean(value) {
+        return typeof value === "boolean";
+    }
 }
