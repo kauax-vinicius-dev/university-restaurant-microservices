@@ -30,6 +30,13 @@ public class ProdutoController {
         produtoService.addProduto(requestDto);
     }
 
+    @PutMapping("{idProduto}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProdutoResponseDto updateProduto(@PathVariable Long idProduto, @Valid @RequestBody ProdutoRequestDto requestDto){
+        produtoService.updateProduto(idProduto, requestDto);
+
+    }
+
     @DeleteMapping("{idProduto}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduto(@PathVariable Long idProduto){

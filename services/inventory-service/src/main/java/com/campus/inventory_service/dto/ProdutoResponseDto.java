@@ -21,7 +21,7 @@ public class ProdutoResponseDto {
 
     private Integer quantidade;
 
-    private String ativo;
+    private Boolean ativo;
 
     private CategoriaEnum categoria;
 }

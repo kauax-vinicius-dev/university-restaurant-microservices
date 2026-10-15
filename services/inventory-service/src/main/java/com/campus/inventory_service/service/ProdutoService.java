@@ -29,19 +29,13 @@ public class ProdutoService {
         EstoqueEntity estoque = estoqueRepository.findByProdutoId(idProduto)
                 .orElseThrow(()-> new RuntimeException("Produto não encontrado!"));
 
-        String ativo = "";
-        if(produto.getAtivo()) {
-            ativo = "Disponível";
-        }else{
-            ativo = "Indisponível";
-        }
 
         ProdutoResponseDto responseDto = ProdutoResponseDto.builder()
                 .nome(produto.getNome())
                 .descricao(produto.getDescricao())
                 .preco(produto.getPreco())
                 .quantidade(estoque.getQuantidade())
-                .ativo(ativo)
+                .ativo(produto.getAtivo())
                 .categoria(produto.getCategoria())
                 .build();
 
@@ -83,7 +77,7 @@ public class ProdutoService {
 
     //atualiza registros do produto
     @Transactional
-    public void updateProduto(Long idProduto, ProdutoRequestDto requestDto){
+    public ProdutoResponseDto updateProduto(Long idProduto, ProdutoRequestDto requestDto){
 
         ProdutoEntity produto = produtoRepository.findById(idProduto)
                 .orElseThrow(()-> new RuntimeException("Produto não encontrado!"));
@@ -97,24 +91,41 @@ public class ProdutoService {
         produto.setAtivo(requestDto.getAtivo());
         produto.setCategoria(requestDto.getCategoria());
 
-        if(estoque.getQuantidade() < requestDto.getQuantidade()){
+        produtoRepository.save(produto);
+
+        if(requestDto.getQuantidade() > estoque.getQuantidade()){
+            int qtdMovimentacao = requestDto.getQuantidade() - estoque.getQuantidade();
             estoque.setQuantidade(requestDto.getQuantidade());
 
             MovimentacaoEntity movimentacao = MovimentacaoEntity.builder()
                     .produto(produto)
-                    .quantidade(requestDto.getQuantidade() - estoque.getQuantidade())
+                    .quantidade(qtdMovimentacao)
                     .tipoMovimentacao(TipoMovimentacao.ENTRADA)
                     .build();
 
-        } else if(estoque.getQuantidade() > requestDto.getQuantidade()){
+            movimentacaoRepository.save(movimentacao);
+
+        } else if(requestDto.getQuantidade() < estoque.getQuantidade()){
+            int qtdMovimentacao = estoque.getQuantidade() - requestDto.getQuantidade();
             estoque.setQuantidade(requestDto.getQuantidade());
 
             MovimentacaoEntity movimentacao = MovimentacaoEntity.builder()
                     .produto(produto)
-                    .quantidade(estoque.getQuantidade() - requestDto.getQuantidade())
+                    .quantidade(qtdMovimentacao)
                     .tipoMovimentacao(TipoMovimentacao.SAIDA)
                     .build();
+
+            movimentacaoRepository.save(movimentacao);
         }
+
+        return ProdutoResponseDto.builder()
+                .nome(requestDto.getNome())
+                .descricao(requestDto.getDescricao())
+                .preco(requestDto.getPreco())
+                .quantidade(requestDto.getQuantidade())
+                .ativo(requestDto.getAtivo())
+                .categoria(requestDto.getCategoria())
+                .build();
     }
 
     //deleta permanentemente um produto
