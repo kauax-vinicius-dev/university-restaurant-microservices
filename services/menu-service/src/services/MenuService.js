@@ -1,7 +1,9 @@
 import { InputValidator } from "../utils/InputValidator.js";
+import { MenuRepository } from "../repositories/MenuRepository.js";
 
 export class MenuService {
     static async registerDish(obj) {
+
         if (InputValidator.hasEmptyFields(obj)) {
             throw new Error("Invalid dish data.");
         }
@@ -11,7 +13,6 @@ export class MenuService {
         if (!InputValidator.isPositiveNumber(obj.price)) {
             throw new Error("Invalid dish price.");
         }
-
         if (!InputValidator.isBoolean(obj.available)) {
             throw new Error("Invalid dish availability.");
         }
@@ -20,6 +21,7 @@ export class MenuService {
     }
 
     static async createDish(obj) {
-
+        await MenuRepository.createDish(obj);
     }
+
 }
