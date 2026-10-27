@@ -24,4 +24,16 @@ export class MenuService {
         await MenuRepository.createDish(obj);
     }
 
+    static async deleteDish(id) {
+        if (!InputValidator.isValidId(id)) {
+            throw new Error("Invalid dish id.");
+        }
+
+        const result = await MenuRepository.deleteDishById(id);
+
+        if (!result.deleted) {
+            throw new Error("Dish not found.");
+        }
+    }
+
 }

@@ -21,4 +21,17 @@ export class MenuRepository {
             ...dishData
         };
     }
+
+    static async deleteDishById(id) {
+        const sql = `
+        DELETE FROM dish
+        WHERE id = ?
+    `;
+
+        const [result] = await pool.execute(sql, [id]);
+
+        return {
+            deleted: result.affectedRows > 0
+        };
+    }
 }
