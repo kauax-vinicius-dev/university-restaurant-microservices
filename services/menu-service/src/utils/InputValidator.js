@@ -26,4 +26,16 @@ export class InputValidator {
     static isBoolean(value) {
         return typeof value === "boolean";
     }
+
+    static isValidId(id) {
+        const parsedId = Number(id);
+
+        return (
+            id !== null &&
+            id !== undefined &&
+            String(id).trim() !== "" &&
+            Number.isSafeInteger(parsedId) &&
+            parsedId > 0
+        );
+    }
 }
