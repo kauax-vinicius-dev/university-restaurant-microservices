@@ -25,8 +25,9 @@ export class MenuRepository {
     static async deleteDishById(id) {
         const sql = `
         DELETE FROM dish
-        WHERE id = ?
+        WHERE dish_id = ?
     `;
+        console.log("Executando DELETE para ID:", id);
 
         const [result] = await pool.execute(sql, [id]);
 
