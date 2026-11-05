@@ -46,4 +46,16 @@ export class MenuRepository {
         return rows;
     }
 
+    static async getAvailableDishes() {
+        const sql = `
+        SELECT *
+        FROM dish
+        WHERE available = TRUE
+    `;
+
+        const [rows] = await pool.execute(sql);
+
+        return rows;
+    }
+
 }

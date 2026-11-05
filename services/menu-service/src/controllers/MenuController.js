@@ -45,4 +45,20 @@ export class MenuController {
             });
         }
     }
+
+    static async getAvailableDishes(request, reply) {
+        try {
+            const availableDishes = await MenuService.getAvailableDishes();
+
+            return reply.status(200).send({
+                message: "Available dishes retrieved successfully.",
+                availableDishes
+            });
+
+        } catch (error) {
+            return reply.status(500).send({
+                message: "Error retrieving available dishes."
+            });
+        }
+    }
 }

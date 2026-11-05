@@ -40,4 +40,8 @@ export class MenuService {
         return await MenuRepository.getAllDishes();
     }
 
+    static async getAvailableDishes() {
+        return await MenuRepository.getAvailableDishes();
+    }
+
 }
