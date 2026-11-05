@@ -31,7 +31,7 @@ export class MenuController {
         }
     }
 
-    static async getAllDishes() {
+    static async getAllDishes(request, reply) {
         try {
             const dishes = await MenuService.getAllDishes();
             return reply.status(200).send({
