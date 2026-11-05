@@ -34,4 +34,16 @@ export class MenuRepository {
             deleted: result.affectedRows > 0
         };
     }
+
+    static async getAllDishes() {
+        const sql = `
+        SELECT *
+        FROM dish
+    `;
+
+        const [rows] = await pool.execute(sql);
+
+        return rows;
+    }
+
 }

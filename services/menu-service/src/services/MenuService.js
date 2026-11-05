@@ -36,4 +36,8 @@ export class MenuService {
         }
     }
 
+    static async getAllDishes() {
+        return await MenuRepository.getAllDishes();
+    }
+
 }

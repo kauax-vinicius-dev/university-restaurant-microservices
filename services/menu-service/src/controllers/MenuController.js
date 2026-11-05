@@ -30,4 +30,19 @@ export class MenuController {
             });
         }
     }
+
+    static async getAllDishes() {
+        try {
+            const dishes = await MenuService.getAllDishes();
+            return reply.status(200).send({
+                message: "Dishes retrieved successfully.",
+                dishes
+            });
+
+        } catch (error) {
+            return reply.status(500).send({
+                message: "Error retrieving dishes."
+            });
+        }
+    }
 }
