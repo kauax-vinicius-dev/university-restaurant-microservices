@@ -18,7 +18,7 @@ export class MenuController {
 
     static async deleteDish(request, reply) {
         try {
-            const id = request.body;
+            const { id } = request.body;
             await MenuService.deleteDish(id);
             return reply.status(200).send({
                 message: "Dish deleted successfully."
