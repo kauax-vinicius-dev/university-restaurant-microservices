@@ -6,7 +6,6 @@ export class MenuRepository {
             INSERT INTO dish (name, description, price, available)
             VALUES (?, ?, ?, ?)
         `;
-
         const values = [
             dishData.name,
             dishData.description,
@@ -15,7 +14,6 @@ export class MenuRepository {
         ];
 
         const [result] = await pool.execute(sql, values);
-
         return {
             id: result.insertId,
             ...dishData
@@ -27,10 +25,7 @@ export class MenuRepository {
         DELETE FROM dish
         WHERE dish_id = ?
     `;
-        console.log("Executando DELETE para ID:", id);
-
         const [result] = await pool.execute(sql, [id]);
-
         return {
             deleted: result.affectedRows > 0
         };
@@ -41,9 +36,7 @@ export class MenuRepository {
         SELECT *
         FROM dish
     `;
-
         const [rows] = await pool.execute(sql);
-
         return rows;
     }
 
@@ -53,9 +46,7 @@ export class MenuRepository {
         FROM dish
         WHERE available = TRUE
     `;
-
         const [rows] = await pool.execute(sql);
-
         return rows;
     }
 
